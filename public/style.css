@@ -1,0 +1,359 @@
+
+/* Ensure all input, select, and textarea fields have the same font, border, and height */
+.input-pro, input[type="text"], input[type="email"], input[type="number"], input[type="date"], input[type="datetime-local"], input[type="password"], textarea, select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background: #fff;
+  transition: border-color 0.2s;
+  height: 44px;
+  appearance: none;
+}
+
+input[type="date"], input[type="datetime-local"] {
+  min-width: 180px;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  width: auto;
+  margin-right: 0.5em;
+  height: auto;
+}
+
+.form-col label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.form-col {
+  margin-bottom: 1rem;
+}
+/* Make all input, select, and textarea look consistent */
+.input-pro, input[type="text"], input[type="email"], input[type="number"], input[type="date"], input[type="datetime-local"], input[type="password"], textarea, select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  width: auto;
+  margin-right: 0.5em;
+}
+
+.form-col label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.form-col {
+  margin-bottom: 1rem;
+}
+/* Base Styles & Variables */
+
+:root {
+    --primary-color: #27ae60;
+    --secondary-color: #219653;
+    --success-color: #2ecc71;
+    --danger-color: #f72585;
+    --warning-color: #f8961e;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --gray-color: #6c757d;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    background-color: #f5f7fa;
+    color: var(--dark-color);
+    line-height: 1.6;
+  }
+  
+  /* Header Styles */
+  .header-bar {
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--box-shadow);
+    position: relative;
+    z-index: 100;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .logo-header {
+    height: 50px;
+    width: auto;
+    border-radius: 50%;
+    border: 2px solid var(--light-color);
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+  
+  .green-title {
+    color: var(--accent-color);
+  }
+  
+  .header-nav {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  /* Button Styles */
+  .main-btn {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+    box-shadow: var(--box-shadow);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .main-btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+  }
+
+  .main-btn:active {
+    transform: translateY(0);
+  }
+  
+  /* Auth Section */
+  #auth-section {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  
+  #signupForm, #loginForm {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 400px;
+    transition: var(--transition);
+  }
+  
+  #signupForm:hover, #loginForm:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  fieldset {
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  legend {
+    padding: 0 0.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+  }
+  
+  /* Form Styles */
+  label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+    color: var(--dark-color);
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="date"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    margin-top: 0.3rem;
+    transition: var(--transition);
+    font-size: 1rem;
+  }
+  
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  .textarea-pro {
+    min-height: 80px;
+    resize: vertical;
+  }
+  
+  /* Form Layout */
+  .form-section {
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .form-col {
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  /* Radio & Checkbox Styles */
+  .radio-group, .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0.8rem 0;
+  }
+  
+  .radio-group label, .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    margin-bottom: 0;
+    font-weight: normal;
+  }
+  
+  input[type="radio"],
+  input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+  }
+  
+  /* Payment Method Toggle */
+  #upiFields {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin: 1rem 0;
+    border: 1px dashed #ccc;
+  }
+  
+  /* Result Section */
+  #result {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .header-bar {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    
+    .header-nav {
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .form-row {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    #auth-section {
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+    }
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  #main-menu {
+    animation: fadeIn 0.5s ease-out;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+  }
+  
+  /* Utility Classes */
+  .hidden {
+    display: none !important;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .mt-2 {
+    margin-top: 2rem;
+  }
+  
+  /* Print Styles */
+  @media print {
+    .header-bar, .main-btn {
+      display: none;
+    }
+    
+    body {
+      background: white;
+    }
+    
+    fieldset {
+      border: none;
+      padding: 0;
+    }
+  }

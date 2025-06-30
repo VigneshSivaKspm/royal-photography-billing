@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Photography Invoice Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header-bar modern-header">
+        <div class="header-content">
+            <img src="logo.png" alt="Royal Photography Logo" class="logo-header">
+            <h1>Royal Photography <span class="green-title">Billing Portal</span></h1>
+        </div>
+        <nav class="header-nav">
+            <button class="main-btn" onclick="window.location.href='index.html'">Make a Booking</button>
+            <button class="main-btn" onclick="window.location.href='invoices.html'">Previous Bookings</button>
+            <button class="main-btn" id="logoutBtn" style="display:none;">Logout</button>
+        </nav>
+    </header>
+    <div id="auth-section">
+      <!-- Signup form removed, only login form remains -->
+      <form id="loginForm">
+        <fieldset>
+          <legend><span class="green-title">Login</span></legend>
+          <div class="form-row">
+            <div class="form-col">
+              <label>Email</label>
+              <input type="email" name="email" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <label>Password</label>
+              <input type="password" name="password" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <button type="submit" class="main-btn" style="width:100%;margin-top:0.5rem;">Login</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div id="main-menu" style="display:none;">
+      <form id="invoiceForm">
+        <fieldset class="form-section">
+          <legend>Booking Details</legend>
+          <div class="form-row">
+            <div class="form-col">
+              <label>Type of event</label>
+              <input name="eventType" required class="input-pro">
+            </div>
+            <div class="form-col">
+              <label>Date of event</label>
+              <input type="date" name="eventDate" required>
+            </div>
+            <div class="form-col">
+              <label>Function Room</label>
+              <input name="functionRoom" required class="input-pro">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <label>Event For</label>
+              <div class="radio-group">
+                <label><input type="radio" name="eventFor" value="Groom" required> Groom</label>
+                <label><input type="radio" name="eventFor" value="Bride"> Bride</label>
+                <label><input type="radio" name="eventFor" value="Both"> Both</label>
+              </div>
+            </div>
+            <div class="form-col">
+              <label>Starting</label>
+              <input type="datetime-local" name="startTime" required class="input-pro">
+            </div>
+            <div class="form-col">
+              <label>Ending</label>
+              <input type="datetime-local" name="finishTime" required class="input-pro">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <label>Organization</label>
+              <div class="radio-group">
+                <label><input type="radio" name="organization" value="Government/Company" required> Government/Company</label>
+                <label><input type="radio" name="organization" value="Private"> Private</label>
+              </div>
+            </div>
+            
+          </div>
+        </fieldset>
+        <fieldset class="form-section">
+          <legend>Equipment Details</legend>
+          <div class="form-col">
+            <label>Other Systems</label>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="otherSystems" value="Drone"> Drone</label>
+              <label><input type="checkbox" name="otherSystems" value="360° Camera"> 360° Camera</label>
+              <label><input type="checkbox" name="otherSystems" value="Focus lights & DJ Lights"> Focus lights & DJ Lights</label>
+              <label><input type="checkbox" name="otherSystems" value="Jib Crane Camera"> Jib Crane Camera</label>
+              <label><input type="checkbox" name="otherSystems" value="LED Wall"> LED Wall</label>
+              <label><input type="checkbox" name="otherSystems" value="Generator"> Generator</label>
+              <label><input type="checkbox" name="otherSystems" value="LIVE Stream Camera"> LIVE Stream Camera</label>
+              <label><input type="checkbox" name="otherSystems" value="Sound System"> Sound System</label>
+              <label><input type="checkbox" name="otherSystems" value="Popper & Fire s/m"> Popper & Fire s/m</label>
+            </div>
+          </div>
+          <div id="otherSystemsDetailsContainer"></div>
+        
+        </fieldset>
+        <fieldset class="form-section">
+          <legend>Reference</legend>
+          <div class="form-row">
+            <div class="form-col">
+              <label>Referral Name</label>
+              <input name="referralName" placeholder="e.g. MD" class="input-pro">
+            </div>
+            <div class="form-col">
+              <label>Note</label>
+              <textarea name="reference" rows="2" class="textarea-pro" placeholder="e.g. For this Wedding Package Engagement Charges are Discounted"></textarea>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Customer Details</legend>
+          <div class="form-row">
+            <div class="form-col">
+              <label>Name</label>
+                <input name="contactName" required class="input-pro">
+            </div>
+            <div class="form-col">
+              <label>Phone</label>
+              <input name="phone" required class="input-pro">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <label>Email</label>
+              <input type="email" name="email">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <label>Address</label>
+                <input name="address" class="input-pro">
+            </div>
+            <div class="form-col">
+              <label>City</label>
+              <input name="city" class="input-pro">
+            </div>
+            <div class="form-col">
+              <label>Zip Code</label>
+              <input name="zip" class="input-pro">
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Payment Details</legend>
+          <div class="form-row">
+            <div class="form-col">
+              <label>Payment Method</label>
+              <div class="radio-group">
+                <label><input type="radio" name="paymentMethod" value="Cash" required id="payCash"> Cash</label>
+                <label><input type="radio" name="paymentMethod" value="Upid/Gpay" id="payUpi"> Upid/Gpay</label>
+              </div>
+            </div>
+            <div class="form-col">
+              <label>Total Amount</label>
+              <input type="number" name="totalAmount" required>
+            </div>
+            <div class="form-col">
+              <label>Advance Deposit Amount</label>
+              <input type="number" name="advanceAmount">
+            </div>
+          </div>
+          <div class="form-row" id="upiFields" style="display:none;">
+            <div class="form-col">
+              <label>Upid Number</label>
+              <input name="upidNumber">
+            </div>
+            <div class="form-col">
+              <label>Payment Date</label>
+              <input type="date" name="upidDate">
+            </div>
+            <div class="form-col">
+              <label>Recipient</label>
+              <input name="upidRecipient">
+            </div>
+          </div>
+        </fieldset>
+        <div class="form-row">
+          <button type="submit" class="main-btn" style="width:100%;margin-top:0.5rem;">Generate Invoice</button>
+        </div>
+      </form>
+      <div id="result"></div>
+    </div>
+    <script>
+        // Dynamically show details fields for selected other systems
+        document.addEventListener('DOMContentLoaded', function() {
+          const form = document.getElementById('invoiceForm');
+          if (!form) return;
+          const otherSystemsCheckboxes = form.querySelectorAll('input[name="otherSystems"]');
+          const container = document.getElementById('otherSystemsDetailsContainer');
+
+          function updateOtherSystemsDetails() {
+            container.innerHTML = '';
+            const checked = Array.from(otherSystemsCheckboxes).filter(cb => cb.checked);
+            if (checked.length === 0) return;
+            checked.forEach(cb => {
+              const sys = cb.value;
+              const sysId = sys.replace(/[^a-zA-Z0-9]/g, '_');
+              const row = document.createElement('div');
+              row.className = 'form-row';
+              row.innerHTML = `
+                <div class="form-col">
+                  <label>${sys} Count</label>
+                  <input name="otherSystemCount_${sysId}" type="number" min="1" value="1" required class="input-pro">
+                </div>
+                <div class="form-col">
+                  <label>${sys} Description</label>
+                  <input name="otherSystemDesc_${sysId}" type="text" placeholder="Description for ${sys}" class="input-pro">
+                </div>
+              `;
+              container.appendChild(row);
+            });
+          }
+          otherSystemsCheckboxes.forEach(cb => {
+            cb.addEventListener('change', updateOtherSystemsDetails);
+          });
+          updateOtherSystemsDetails();
+        });
+        </script>
+    <!-- Load Firebase scripts in correct order -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="firebaseconfig.js"></script>
+    <!-- Load jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Load your scripts after Firebase -->
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+    <script>
+    // Payment method show/hide UPI fields
+    document.addEventListener('DOMContentLoaded', function() {
+        const payCash = document.getElementById('payCash');
+        const payUpi = document.getElementById('payUpi');
+        const upiFields = document.getElementById('upiFields');
+        function updatePaymentFields() {
+            if (payUpi.checked) {
+                upiFields.style.display = '';
+            } else {
+                upiFields.style.display = 'none';
+            }
+        }
+        if (payCash && payUpi && upiFields) {
+            payCash.addEventListener('change', updatePaymentFields);
+            payUpi.addEventListener('change', updatePaymentFields);
+            updatePaymentFields();
+        }
+    });
+    </script>
+</body>
+</html>

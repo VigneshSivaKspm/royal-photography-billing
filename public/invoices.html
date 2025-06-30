@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Invoices - Royal Photography</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="invoices.css">
+</head>
+<body>
+    <header class="header-bar modern-header">
+        <div class="header-content">
+            <img src="logo.png" alt="Royal Photography Logo" class="logo-header">
+            <h1>Royal Photography <span class="green-title">Billing Portal</span></h1>
+        </div>
+        <nav class="header-nav">
+            <button class="main-btn" onclick="window.location.href='index.html'">Make a Booking</button>
+            <button class="main-btn" onclick="window.location.href='invoices.html'">Previous Bookings</button>
+        </nav>
+    </header>
+    <div id="invoices-list">Loading...</div>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="firebaseconfig.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="invoices.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
