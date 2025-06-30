@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Royal Photography Invoice Generator</title>
+    <script>
+      // Force reload from server on every page load (bypass cache)
+      if (window.performance && window.performance.navigation && window.performance.navigation.type === 1) {
+        // If reloaded, do nothing
+      } else {
+        window.location.replace(window.location.href.split("?")[0] + '?v=' + Date.now());
+      }
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>

@@ -249,25 +249,42 @@ async function generatePremiumPDF(data) {
   doc.text('Email', col1, clientY);
   doc.text(`: ${data.email || ''}`, col1 + 78, clientY);
   clientY += 13;
-  doc.text('Address', col1, clientY);
-  // Improved address wrapping: 25-35, break at space or comma
-  let addressText = data.address || '';
-  if (addressText.length > 30) {
+doc.text('Address', col1, clientY);
+// Improved address wrapping: wrap at 30 chars, break at space/comma, up to 3 lines
+let addressText = data.address || '';
+const wrapAddress = (text, maxLen = 30, maxLines = 3) => {
+  let lines = [];
+  let remaining = text.trim();
+  for (let l = 0; l < maxLines && remaining.length > 0; l++) {
+    if (remaining.length <= maxLen) {
+      lines.push(remaining);
+      remaining = '';
+      break;
+    }
     let breakIdx = -1;
-    for (let i = 25; i <= 35 && i < addressText.length; i++) {
-      if (addressText[i] === ' ' || addressText[i] === ',') {
+    for (let i = maxLen - 5; i <= maxLen + 5 && i < remaining.length; i++) {
+      if (remaining[i] === ' ' || remaining[i] === ',') {
         breakIdx = i;
         break;
       }
     }
-    if (breakIdx === -1) breakIdx = 30; // fallback
-    const addrLines = [addressText.slice(0, breakIdx), addressText.slice(breakIdx).trim()];
-    doc.text(`: ${addrLines[0]}`, col1 + 78, clientY);
-    clientY += 13;
-    doc.text(`  ${addrLines[1]}`, col1 + 78, clientY); // indent second line
-  } else {
-    doc.text(`: ${addressText}`, col1 + 78, clientY);
+    if (breakIdx === -1) breakIdx = maxLen;
+    lines.push(remaining.slice(0, breakIdx));
+    remaining = remaining.slice(breakIdx).trim();
   }
+  if (remaining.length > 0 && lines.length < maxLines) lines.push(remaining); // last overflow
+  return lines;
+};
+const addrLines = wrapAddress(addressText);
+if (addrLines.length > 0) {
+  doc.text(`: ${addrLines[0]}`, col1 + 78, clientY);
+  for (let i = 1; i < addrLines.length; i++) {
+    clientY += 13;
+    doc.text(`  ${addrLines[i]}`, col1 + 78, clientY); // indent subsequent lines
+  }
+} else {
+  doc.text(`: `, col1 + 78, clientY);
+}
   clientY += 13;
   doc.text('City', col1, clientY);
   doc.text(`: ${data.city || ''}`, col1 + 78, clientY);

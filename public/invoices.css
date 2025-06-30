@@ -1,3 +1,96 @@
+/* --- Edit Modal & Form Enhancements --- */
+
+.edit-invoice-form input[type="text"],
+.edit-invoice-form input[type="email"],
+.edit-invoice-form input[type="date"],
+.edit-invoice-form input[type="number"] {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  margin-top: 0.35rem;
+  margin-bottom: 0.7rem;
+  background: #f6fbf8;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.06);
+  color: var(--dark-color);
+}
+
+.edit-invoice-form input[type="text"]::placeholder,
+.edit-invoice-form input[type="email"]::placeholder,
+.edit-invoice-form input[type="date"]::placeholder,
+.edit-invoice-form input[type="number"]::placeholder {
+  color: #b0b8b4;
+  opacity: 1;
+  font-size: 0.98rem;
+}
+
+.edit-invoice-form input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.12);
+}
+
+.edit-invoice-form label {
+  font-weight: 500;
+  color: var(--dark-color);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.edit-invoice-form .modal-section {
+  margin-bottom: 1.25rem;
+}
+
+.edit-invoice-form .section-content {
+  background: #f4f8f6;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+}
+
+.edit-invoice-form .save-btn {
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+}
+.edit-invoice-form .save-btn:hover {
+  background: var(--secondary-color);
+}
+
+/* Make edit modal visually distinct */
+.modal-content form.edit-invoice-form {
+  background: #f9fdfb;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.08);
+}
+
+/* Edit button style improvement */
+.edit-btn {
+  background: var(--warning-color);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  box-shadow: var(--box-shadow);
+}
+.edit-btn:hover {
+  background: #f3722c;
+  color: #fff;
+  opacity: 1;
+  box-shadow: 0 6px 16px rgba(248, 150, 30, 0.12);
+  transform: translateY(-2px);
+}
 /* Base Styles */
 :root {
     --primary-color: #27ae60;

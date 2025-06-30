@@ -127,6 +127,9 @@ class InvoiceManager {
             <button class="action-btn download-btn" data-idx="${idx}">
               <i class="icon">📥</i> PDF
             </button>
+            <button class="action-btn edit-btn" data-idx="${idx}">
+              <i class="icon">✏️</i> Edit
+            </button>
           </div>
         </div>
       `;
@@ -140,7 +143,7 @@ class InvoiceManager {
           this.showInvoiceModal(invoices[idx]);
         });
       });
-  
+
       document.querySelectorAll('.download-btn').forEach(btn => {
         btn.addEventListener('click', async (e) => {
           e.stopPropagation();
@@ -148,13 +151,150 @@ class InvoiceManager {
           await this.downloadInvoicePDF(invoices[idx], btn);
         });
       });
-  
+
+      document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const idx = btn.dataset.idx;
+          this.showEditModal(invoices[idx]);
+        });
+      });
+
       document.querySelectorAll('.invoice-card').forEach(card => {
         card.addEventListener('click', () => {
           const idx = card.querySelector('.view-btn').dataset.idx;
           this.showInvoiceModal(invoices[idx]);
         });
       });
+    }
+    showEditModal(invoice) {
+      const modal = document.createElement('div');
+      modal.className = 'modal-overlay';
+      modal.innerHTML = this.getEditModalHTML(invoice);
+      document.body.appendChild(modal);
+
+      // Inline style for modal input fields
+      this.styleModalInputs(modal);
+
+      modal.querySelector('.modal-close').addEventListener('click', () => modal.remove());
+      modal.addEventListener('click', (e) => e.target === modal && modal.remove());
+
+      const form = modal.querySelector('.edit-invoice-form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const updated = {};
+        for (const [key, value] of formData.entries()) {
+          updated[key] = value;
+        }
+        try {
+          await db.collection('bookings').doc(invoice.id).update(updated);
+          alert('Booking updated successfully!');
+          modal.remove();
+          this.renderInvoices();
+        } catch (err) {
+          alert('Failed to update booking.');
+        }
+      });
+    }
+
+    // Inline style function for modal input fields
+    styleModalInputs(modal) {
+      const inputs = modal.querySelectorAll('input[type="text"], input[type="email"], input[type="date"], input[type="number"]');
+      inputs.forEach(function(input) {
+        input.style.width = "100%";
+        input.style.padding = "0.7rem 1rem";
+        input.style.border = "2px solid #e0e0e0";
+        input.style.borderRadius = "12px";
+        input.style.fontSize = "1.05rem";
+        input.style.marginTop = "0.35rem";
+        input.style.marginBottom = "0.7rem";
+        input.style.background = "#f6fbf8";
+        input.style.transition = "border-color 0.2s, box-shadow 0.2s, background 0.2s";
+        input.style.boxShadow = "0 2px 8px rgba(39, 174, 96, 0.06)";
+        input.style.color = "#212529";
+        input.addEventListener('focus', function() {
+          input.style.outline = "none";
+          input.style.borderColor = "#27ae60";
+          input.style.background = "#fff";
+          input.style.boxShadow = "0 0 0 2px rgba(39, 174, 96, 0.12)";
+        });
+        input.addEventListener('blur', function() {
+          input.style.borderColor = "#e0e0e0";
+          input.style.background = "#f6fbf8";
+          input.style.boxShadow = "0 2px 8px rgba(39, 174, 96, 0.06)";
+        });
+      });
+    }
+
+    getEditModalHTML(invoice) {
+      const inputStyle = `width:100%;padding:0.7rem 1rem;border:2px solid #e0e0e0;border-radius:12px;font-size:1.05rem;margin-top:0.35rem;margin-bottom:0.7rem;background:#f6fbf8;transition:border-color 0.2s,box-shadow 0.2s,background 0.2s;box-shadow:0 2px 8px rgba(39,174,96,0.06);color:#212529;`;
+      const inputFocus = `onfocus="this.style.outline='none';this.style.borderColor='#27ae60';this.style.background='#fff';this.style.boxShadow='0 0 0 2px rgba(39,174,96,0.12)';" onblur="this.style.borderColor='#e0e0e0';this.style.background='#f6fbf8';this.style.boxShadow='0 2px 8px rgba(39,174,96,0.06)';"`;
+      return `
+        <div class="modal-content">
+          <button class="modal-close" aria-label="Close">&times;</button>
+          <header class="modal-header">
+            <h2>Edit Booking #${invoice.bookingNumber || 'N/A'}</h2>
+          </header>
+          <form class="edit-invoice-form modal-body">
+            <section class="modal-section">
+              <h3 class="section-title">Customer Details</h3>
+              <div class="section-content">
+                <div class="detail-row"><label>Name: <input name="contactName" value="${invoice.contactName || ''}" required style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Contact: <input name="phone" value="${invoice.phone || ''}" required style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Email: <input name="email" value="${invoice.email || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Address: <input name="address" value="${invoice.address || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>City: <input name="city" value="${invoice.city || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Zip: <input name="zip" value="${invoice.zip || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+              </div>
+            </section>
+            <section class="modal-section">
+              <h3 class="section-title">Event Details</h3>
+              <div class="section-content">
+                <div class="detail-row"><label>Event Type: <input name="eventType" value="${invoice.eventType || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Event For: <input name="eventFor" value="${invoice.eventFor || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Event Date: <input name="eventDate" type="date" value="${invoice.eventDate ? new Date(invoice.eventDate).toISOString().slice(0,10) : ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Start Time: <input name="startTime" value="${invoice.startTime || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Finish Time: <input name="finishTime" value="${invoice.finishTime || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Venue: <input name="functionRoom" value="${invoice.functionRoom || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Organization: <input name="organization" value="${invoice.organization || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Company Name: <input name="companyName" value="${invoice.companyName || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>System Name: <input name="systemName" value="${invoice.systemName || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+              </div>
+            </section>
+            <section class="modal-section">
+              <h3 class="section-title">Equipment</h3>
+              <div class="section-content">
+                <div class="detail-row"><label>Other Systems: <input name="otherSystems" value="${(invoice.otherSystems || []).join(', ')}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Details: <input name="details" value="${invoice.details || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+              </div>
+            </section>
+            <section class="modal-section">
+              <h3 class="section-title">Payment</h3>
+              <div class="section-content">
+                <div class="detail-row"><label>Advance Paid: <input name="advanceAmount" value="${invoice.advanceAmount || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Total Amount: <input name="totalAmount" value="${invoice.totalAmount || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Payment Method: <input name="paymentMethod" value="${invoice.paymentMethod || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>UPI Number: <input name="upidNumber" value="${invoice.upidNumber || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>UPI Date: <input name="upidDate" type="date" value="${invoice.upidDate ? new Date(invoice.upidDate).toISOString().slice(0,10) : ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>UPI Recipient: <input name="upidRecipient" value="${invoice.upidRecipient || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+              </div>
+            </section>
+            <section class="modal-section">
+              <h3 class="section-title">Other Information</h3>
+              <div class="section-content">
+                <div class="detail-row"><label>Referral Name: <input name="referralName" value="${invoice.referralName || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+                <div class="detail-row"><label>Reference: <input name="reference" value="${invoice.reference || ''}" style="${inputStyle}" ${inputFocus}></label></div>
+              </div>
+            </section>
+            <footer class="modal-footer">
+              <button class="btn save-btn" type="submit">
+                <i class="icon">💾</i> Save Changes
+              </button>
+            </footer>
+          </form>
+        </div>
+      `;
     }
   
     showInvoiceModal(invoice) {
