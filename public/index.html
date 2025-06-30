@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Royal Photography Invoice Generator</title>
     <script>
-      // Force reload from server on every page load (bypass cache)
-      if (window.performance && window.performance.navigation && window.performance.navigation.type === 1) {
-        // If reloaded, do nothing
-      } else {
-        window.location.replace(window.location.href.split("?")[0] + '?v=' + Date.now());
+      // Only add cache-busting param if not already present
+      if (!window.location.search.includes('v=')) {
+        window.location.replace(window.location.pathname + '?v=' + Date.now());
       }
     </script>
     <link rel="stylesheet" href="style.css">
@@ -19,7 +17,7 @@
         <div class="header-content">
             <img src="logo.png" alt="Royal Photography Logo" class="logo-header">
             <h1>Royal Photography <span class="green-title">Billing Portal</span></h1>
-        </div>
+           </div>
         <nav class="header-nav">
             <button class="main-btn" onclick="window.location.href='index.html'">Make a Booking</button>
             <button class="main-btn" onclick="window.location.href='invoices.html'">Previous Bookings</button>
