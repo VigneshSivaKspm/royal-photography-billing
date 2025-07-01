@@ -485,13 +485,51 @@ function formatDateTime(dtStr) {
   doc.text('ROYAL PHOTOGRAPHY', margin + 12, yPos + 18);
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
-  doc.text('Phone: +91 85939 25936 | Email: bookings@royalphotography.org', margin + 12, yPos + 33);
+  // Add clickable phone and email in footer
+  const footerPhone = '+91 730 660 7847';
+  const footerEmail = 'bookings@royalphotography.org';
+  const phoneLabel = 'Phone: ';
+  const emailLabel = 'Email: ';
+  let xFooter = margin + 12;
+  let yFooter = yPos + 33;
+  // Phone clickable
+  doc.text(phoneLabel, xFooter, yFooter);
+  xFooter += doc.getTextWidth(phoneLabel);
+  doc.textWithLink(footerPhone, xFooter, yFooter, { url: `tel:${footerPhone.replace(/[^0-9+]/g, '')}` });
+  xFooter += doc.getTextWidth(footerPhone) + 3;
+  doc.text('|', xFooter, yFooter);
+  xFooter += doc.getTextWidth('|') + 3;
+  doc.text(emailLabel, xFooter, yFooter);
+  xFooter += doc.getTextWidth(emailLabel);
+  doc.textWithLink(footerEmail, xFooter, yFooter, { url: `mailto:${footerEmail}` });
+
   // QR codes with extra right margin
   const qrSize = 30;
   const qrGap = 10;
   const extraRightMargin = 20;
   doc.addImage(instaQR, 'JPEG', pageWidth - margin - qrSize * 2 - qrGap - extraRightMargin, yPos + 5, qrSize, qrSize);
   doc.addImage(gpayQR, 'PNG', pageWidth - margin - qrSize - extraRightMargin, yPos + 5, qrSize, qrSize);
+
+  // --- Make customer phone/email clickable in client details section ---
+  // Find the y positions used for phone/email in client details
+  // These are calculated as:
+  // let clientY = yPos + 90 + 15; // Name
+  // clientY += 13; // Phone
+  // clientY += 13; // Email
+  // So:
+  let baseY = margin + 90 + 15; // Name
+  let phoneY = baseY + 13; // Phone
+  let emailY = phoneY + 13; // Email
+  // Phone clickable
+  if (data.phone) {
+    const phoneX = col1 + 78;
+    doc.textWithLink(`: ${data.phone}`, phoneX, phoneY, { url: `tel:${String(data.phone).replace(/[^0-9+]/g, '')}` });
+  }
+  // Email clickable
+  if (data.email) {
+    const emailX = col1 + 78;
+    doc.textWithLink(`: ${data.email}`, emailX, emailY, { url: `mailto:${data.email}` });
+  }
 
   return doc.output('blob');
 }
